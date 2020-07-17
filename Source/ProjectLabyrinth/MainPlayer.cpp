@@ -6,6 +6,8 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "UObject/ConstructorHelpers.h"
+
 
 // Sets default values
 AMainPlayer::AMainPlayer()
@@ -22,15 +24,27 @@ AMainPlayer::AMainPlayer()
 	CreateDefaultSubobject<UFloatingPawnMovement>("PawnMovement");
 
 
+
 	// Create root component for PlayerMesh
-	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>("PlayerMesh");
-	SetRootComponent(PlayerMesh);
+	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>("Player Mesh");
+	RootComponent = PlayerMesh; 
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereAsset(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
+
+	if (SphereAsset.Succeeded())
+	{
+		PlayerMesh->SetStaticMesh(SphereAsset.Object);
+	}
+
 
 	// Create a CameraBoom
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->TargetArmLength = DefaultZoomLength;
 	SpringArm->SetRelativeRotation(DefaultCameraRotation);
+	SpringArm->bDoCollisionTest = false; 
+	SpringArm->bInheritPitch = false;
+	SpringArm->bEnableCameraLag = true; 
 
 	// Create a Camera
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
