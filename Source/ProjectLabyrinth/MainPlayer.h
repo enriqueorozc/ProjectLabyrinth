@@ -15,19 +15,19 @@ public:
 	// Sets default values for this pawn's properties
 	AMainPlayer();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* PlayerMesh;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArm; 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UCameraComponent* Camera; 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float DefaultZoomLength;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FRotator DefaultCameraRotation; 
 
 protected:
